@@ -3,12 +3,12 @@ using System.Collections;
 
 public class DoorControl : MonoBehaviour {
 
-	bool right = false;
-	float speed = 0.005f;
+	protected bool right = false;
+	protected float speed = 0.005f;
 
-	bool opening = false;
-	bool closing = false;
-	bool state = false;
+	protected bool opening = false;
+	protected bool closing = false;
+	protected bool state = false;
 
 	void Start () {
 		if (gameObject.name == "Right Door"){
@@ -23,10 +23,18 @@ public class DoorControl : MonoBehaviour {
 
 	void FixedUpdate(){
 		if (!state && Input.GetKeyDown (KeyCode.Return)) {
+			if (right) {
+				GetComponentsInParent<AudioSource> () [1].Stop ();
+				GetComponentsInParent<AudioSource> () [0].Play ();
+			}
 			opening = true;
 			closing = false;
 			state = true;
 		} else if (state && Input.GetKeyDown (KeyCode.Return)){
+			if (right) {
+				GetComponentsInParent<AudioSource> () [0].Stop ();
+				GetComponentsInParent<AudioSource> () [1].Play ();
+			}
 			opening = false;
 			closing = true;
 			state = false;
@@ -75,5 +83,11 @@ public class DoorControl : MonoBehaviour {
 		}
 	} 
 
-	public bool getState (){ return state;}
+	public bool getState (){ 
+		if (!state && !closing) { 
+			return true; 
+		} else {
+			return false;
+		}
+	}
 }
