@@ -6,7 +6,8 @@ public class Transfer : MonoBehaviour {
 	protected int stage = 0;
 	protected bool changing = false;
 	protected int changeStage = 0;
-	protected ulong lightTimer = 0;
+	protected int flashTimer = 0;
+	protected int lightTimer = 0;
 	protected ulong worldTimer = 0;
 	protected float lightControl = 1f;
 	private bool[] complete = new bool[8];
@@ -56,11 +57,13 @@ public class Transfer : MonoBehaviour {
 		} else if (worldTimer >= 42 && !complete[3]) {
 			Ele1Control.callDoor ();
 			complete [3] = true;
-		} else if (worldTimer >= 32 && !complete[2]) {
+		} else if (worldTimer >= 1 && !complete[2]) {
 			stage++;
 			changing = true;
 			complete [2] = true;
+			flashTimer = Random.Range (5,20);
 		} else if (worldTimer >= 28 && !complete[1]) {
+			complete [1] = true;
 			Ele0Control.callDoor ();
 			complete [1] = true;
 		} else if (worldTimer >= 10 && !complete[0]) {
@@ -70,25 +73,44 @@ public class Transfer : MonoBehaviour {
 	}
 
 	protected void movePlayer(){
+		Debug.Log (changeStage);
 		if (changing) {
-			lightTimer++;
-			if (lightTimer < 10) {
-				lightControl += 0.1f;
-			} else if (lightTimer > 20) {
-				lightControl -= 0.1f;
-			} else if (lightTimer == 15 && stage == 1) {
-				lightControl = 1f;
-				rig.transform.position = new Vector3 (0, 101, 0);
-			} else if (lightTimer == 15 && stage == 2) {
-				lightControl = 1f;
-				rig.transform.position = new Vector3 (0, 201, 0);
+			if (changeStage == 0 || changeStage == 2) {
+				lightTimer++;
+				if (lightTimer <= flashTimer) {
+					lights.color = (new Color (0f, 0f, 0f, 1f));
+				} else if (lightTimer > 40 && changeStage == 2) {
+					lightTimer = 0;
+					changing = false;
+					changeStage = 0;
+				} else if (lightTimer > 40) {
+					changeStage = 1;
+					lightTimer = 0;
+				} else {
+					lights.color = (new Color (0f, 0f, 0f, 0f));
+				}
+			} else if (changeStage == 1) {
+				lightTimer++;
+				Debug.Log (lightTimer);
+				if (lightTimer < 10) {
+					lightControl += 0.1f;
+				} else if (lightTimer > 10) {
+					lightControl -= 0.1f;
+				} else if (lightTimer == 10 && stage == 1) {
+					lightControl = 1f;
+					rig.transform.position = new Vector3 (0, 101, 0);
+				} else if (lightTimer == 10 && stage == 2) {
+					lightControl = 1f;
+					rig.transform.position = new Vector3 (0, 201, 0);
+				}
+				if (lightTimer >= 20) {
+					flashTimer = Random.Range (5, 20);
+					lightControl = 0f;
+					lightTimer = 0;
+					changeStage = 2;
+				}
+				lights.color = (new Color (0f, 0f, 0f, lightControl));
 			}
-			if (lightTimer >= 30) {
-				lightControl = 0f;
-				lightTimer = 0;
-				changing = false;
-			}
-			lights.color = (new Color (0f, 0f, 0f, lightControl));
 		}
 	}
 }
