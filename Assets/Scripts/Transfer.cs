@@ -7,6 +7,7 @@ public class Transfer : MonoBehaviour {
 	protected ulong lightTimer = 0;
 	protected ulong worldTimer = 0;
 	protected float lightControl = 1f;
+	private bool[] complete = new bool[8];
 	public GameObject rig;
 	public GameObject Ele0;
 	public GameObject Ele1;
@@ -19,61 +20,54 @@ public class Transfer : MonoBehaviour {
 		Ele0Control = Ele0.GetComponent<ElevatorControl> ();
 		Ele1Control = Ele1.GetComponent<ElevatorControl> ();
 		Ele2Control = Ele2.GetComponent<ElevatorControl> ();
+		for(int i = 0; i < 8; i++){
+			complete[i] = false;
+		}
 	}
 	
-	// Update is called once per frame
-	void Update () {
-		/*if (Input.GetKeyDown(KeyCode.Backspace)){
-			if (stage == 0) {
-				stage++;
-				changing = true;
-				Ele0.transform.GetChild (0).gameObject.SetActive(true);
-				Ele1.transform.GetChild (0).gameObject.SetActive(true);
-			} else if (stage == 1) {
-				stage++;
-				changing = true;
-				Ele1.transform.GetChild (0).gameObject.SetActive(true);
-				Ele2.transform.GetChild (0).gameObject.SetActive(true);
-			}
-		}*/
-	}
-
 	void FixedUpdate(){
-		worldTimer++;
-		//Debug.Log(worldTimer);
-		checkTime ();
+		worldTimer = (ulong)Time.time;
+		if (!complete[7]) {
+			checkTime ();
+		}
 		movePlayer ();
 	}
 
 	protected void checkTime(){
-
-		if (worldTimer == 3230) {
+		if (worldTimer >= 94&& !complete[7]) {
 			Ele2Control.callDoor ();
 			Ele2.transform.GetChild (0).gameObject.SetActive(true);
-		} else if (worldTimer == 2800) {
+			complete [7] = true;
+		} else if (worldTimer >= 74 && !complete[6]) {
 			Ele2Control.callDoor ();
 			Ele2.transform.GetChild (0).gameObject.SetActive(false);
-		} else if (worldTimer == 2400) {
+			complete [6] = true;
+		} else if (worldTimer >= 64 && !complete[5]) {
 			stage++;
 			changing = true;
 			Ele2.transform.GetChild (0).gameObject.SetActive(true);
 			Ele1.transform.GetChild (0).gameObject.SetActive(true);
-		} else if (worldTimer == 2230) {
+			complete [5] = true;
+		} else if (worldTimer >= 62 && !complete[4]) {
 			Ele1Control.callDoor ();
-
-		} else if (worldTimer == 1600) {
+			complete [4] = true;
+		} else if (worldTimer >= 42 && !complete[3]) {
 			Ele1Control.callDoor ();
 			Ele1.transform.GetChild (0).gameObject.SetActive(false);
-		} else if (worldTimer == 1200) {
+			complete [3] = true;
+		} else if (worldTimer >= 32 && !complete[2]) {
 			stage++;
 			changing = true;
 			Ele1.transform.GetChild (0).gameObject.SetActive(true);
 			Ele0.transform.GetChild (0).gameObject.SetActive (true);
-		} else if (worldTimer == 1030) {
+			complete [2] = true;
+		} else if (worldTimer >= 30 && !complete[1]) {
 			Ele0Control.callDoor ();
-		} else if (worldTimer == 400) {
+			complete [1] = true;
+		} else if (worldTimer >= 10 && !complete[0]) {
 			Ele0Control.callDoor ();
 			Ele0.transform.GetChild (0).gameObject.SetActive (false);
+			complete [0] = true;
 		}
 	}
 
