@@ -4,8 +4,8 @@ using System.Collections;
 public class Transfer : MonoBehaviour {
 	protected int stage = 0;
 	protected bool changing = false;
-	protected int lightTimer = 0;
-	protected int worldTimer = 0;
+	protected ulong lightTimer = 0;
+	protected ulong worldTimer = 0;
 	protected float lightControl = 1f;
 	public GameObject rig;
 	public GameObject Ele0;
@@ -23,7 +23,6 @@ public class Transfer : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
 		/*if (Input.GetKeyDown(KeyCode.Backspace)){
 			if (stage == 0) {
 				stage++;
