@@ -5,9 +5,14 @@ public class ElevatorControl : MonoBehaviour {
 
 	protected bool state = false;
 	public GameObject doors;
+	private DoorControl doorControl;
+	private AudioSource audioSource;
+	private LightController lightController;
 	// Use this for initialization
 	void Start () {
-	
+		doorControl = doors.GetComponentInChildren<DoorControl> ();
+		audioSource = GetComponent<AudioSource> ();
+		lightController = GetComponentInChildren<LightController> ();
 	}
 	
 	// Update is called once per frame
@@ -17,13 +22,13 @@ public class ElevatorControl : MonoBehaviour {
 
 	void FixedUpdate(){
 		//Debug.Log (doors.GetComponentInChildren<DoorControl> ().getState ());
-		if (doors.GetComponentInChildren<DoorControl> ().getState () && !state) {
-			GetComponent<AudioSource>().Play();
-			GetComponentInChildren<LightController> ().setStop(false);
+		if (doorControl.getState () && !state) {
+			audioSource.Play();
+			lightController.setStop(false);
 			state = true;
-		} else if (!doors.GetComponentInChildren<DoorControl> ().getState () && state) {
-			GetComponent<AudioSource>().Stop();
-			GetComponentInChildren<LightController> ().setStop(true);
+		} else if (!doorControl.getState () && state) {
+			audioSource.Stop();
+			lightController.setStop(true);
 			state = false;
 		}
 		/*if (doors.GetComponentInChildren<DoorControl> ().getState () && Input.GetKeyDown (KeyCode.Return)){
@@ -36,11 +41,11 @@ public class ElevatorControl : MonoBehaviour {
 	}
 
 	public void callDoor(){
-		if (doors.GetComponentInChildren<DoorControl> ().getState ()){
+		if (doorControl.getState ()){
 			doors.GetComponentsInChildren<DoorControl> ()[0].callOpen();
 			doors.GetComponentsInChildren<DoorControl> ()[1].callOpen();
 			Debug.Log("open");
-		} else if(!doors.GetComponentInChildren<DoorControl> ().getState ()){
+		} else if(!doorControl.getState ()){
 			doors.GetComponentsInChildren<DoorControl> ()[0].callClose();
 			doors.GetComponentsInChildren<DoorControl> ()[1].callClose();
 			Debug.Log("Close");

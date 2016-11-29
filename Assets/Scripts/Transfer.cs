@@ -11,10 +11,14 @@ public class Transfer : MonoBehaviour {
 	public GameObject Ele0;
 	public GameObject Ele1;
 	public GameObject Ele2;
-
+	private ElevatorControl Ele0Control;
+	private ElevatorControl Ele1Control;
+	private ElevatorControl Ele2Control;
 	// Use this for initialization
 	void Start () {
-	
+		Ele0Control = Ele0.GetComponent<ElevatorControl> ();
+		Ele1Control = Ele1.GetComponent<ElevatorControl> ();
+		Ele2Control = Ele2.GetComponent<ElevatorControl> ();
 	}
 	
 	// Update is called once per frame
@@ -45,10 +49,10 @@ public class Transfer : MonoBehaviour {
 	protected void checkTime(){
 
 		if (worldTimer == 3230) {
-			Ele2.GetComponent<ElevatorControl>().callDoor ();
+			Ele2Control.callDoor ();
 			Ele2.transform.GetChild (0).gameObject.SetActive(true);
 		} else if (worldTimer == 2800) {
-			Ele2.GetComponent<ElevatorControl>().callDoor ();
+			Ele2Control.callDoor ();
 			Ele2.transform.GetChild (0).gameObject.SetActive(false);
 		} else if (worldTimer == 2400) {
 			stage++;
@@ -56,10 +60,10 @@ public class Transfer : MonoBehaviour {
 			Ele2.transform.GetChild (0).gameObject.SetActive(true);
 			Ele1.transform.GetChild (0).gameObject.SetActive(true);
 		} else if (worldTimer == 2230) {
-			Ele1.GetComponent<ElevatorControl>().callDoor ();
+			Ele1Control.callDoor ();
 
 		} else if (worldTimer == 1600) {
-			Ele1.GetComponent<ElevatorControl>().callDoor ();
+			Ele1Control.callDoor ();
 			Ele1.transform.GetChild (0).gameObject.SetActive(false);
 		} else if (worldTimer == 1200) {
 			stage++;
@@ -67,9 +71,9 @@ public class Transfer : MonoBehaviour {
 			Ele1.transform.GetChild (0).gameObject.SetActive(true);
 			Ele0.transform.GetChild (0).gameObject.SetActive (true);
 		} else if (worldTimer == 1030) {
-			Ele0.GetComponent<ElevatorControl>().callDoor ();
+			Ele0Control.callDoor ();
 		} else if (worldTimer == 400) {
-			Ele0.GetComponent<ElevatorControl>().callDoor ();
+			Ele0Control.callDoor ();
 			Ele0.transform.GetChild (0).gameObject.SetActive (false);
 		}
 	}
