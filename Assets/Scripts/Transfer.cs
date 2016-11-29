@@ -37,7 +37,7 @@ public class Transfer : MonoBehaviour {
 
 	void FixedUpdate(){
 		worldTimer++;
-		//Debug.Log(worldTimer);
+		Debug.Log(worldTimer);
 		checkTime ();
 		movePlayer ();
 	}
@@ -92,8 +92,6 @@ public class Transfer : MonoBehaviour {
 				lightControl = 1f;
 				lightTimer = 0;
 				changing = false;
-				Ele1.transform.GetChild (0).gameObject.SetActive(false);
-				Ele2.transform.GetChild (0).gameObject.SetActive(false);
 			}
 			for (int i = 0; i < 3; i++) {
 				Ele0.GetComponentsInChildren<Light> () [i].intensity = lightControl;
