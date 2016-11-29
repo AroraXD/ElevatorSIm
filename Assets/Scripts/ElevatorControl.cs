@@ -26,5 +26,24 @@ public class ElevatorControl : MonoBehaviour {
 			GetComponentInChildren<LightController> ().setStop(true);
 			state = false;
 		}
+		/*if (doors.GetComponentInChildren<DoorControl> ().getState () && Input.GetKeyDown (KeyCode.Return)){
+			doors.GetComponentsInChildren<DoorControl> ()[0].callOpen();
+			doors.GetComponentsInChildren<DoorControl> ()[1].callOpen();
+		} else if(!doors.GetComponentInChildren<DoorControl> ().getState () && Input.GetKeyDown (KeyCode.Return)){
+			doors.GetComponentsInChildren<DoorControl> ()[0].callClose();
+			doors.GetComponentsInChildren<DoorControl> ()[1].callClose();
+		}*/
+	}
+
+	public void callDoor(){
+		if (doors.GetComponentInChildren<DoorControl> ().getState ()){
+			doors.GetComponentsInChildren<DoorControl> ()[0].callOpen();
+			doors.GetComponentsInChildren<DoorControl> ()[1].callOpen();
+			Debug.Log("open");
+		} else if(!doors.GetComponentInChildren<DoorControl> ().getState ()){
+			doors.GetComponentsInChildren<DoorControl> ()[0].callClose();
+			doors.GetComponentsInChildren<DoorControl> ()[1].callClose();
+			Debug.Log("Close");
+		}
 	}
 }

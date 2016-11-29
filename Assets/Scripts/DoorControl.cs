@@ -22,7 +22,7 @@ public class DoorControl : MonoBehaviour {
 	}
 
 	void FixedUpdate(){
-		if (!state && Input.GetKeyDown (KeyCode.Return)) {
+		/*if (!state && Input.GetKeyDown (KeyCode.Return)) {
 			if (right) {
 				GetComponentsInParent<AudioSource> () [1].Stop ();
 				GetComponentsInParent<AudioSource> () [0].Play ();
@@ -38,7 +38,7 @@ public class DoorControl : MonoBehaviour {
 			opening = false;
 			closing = true;
 			state = false;
-		}
+		}*/
 		if (opening) {
 			open ();
 		} else if (closing) {
@@ -90,4 +90,29 @@ public class DoorControl : MonoBehaviour {
 			return false;
 		}
 	}
+
+	public void callOpen(){
+		if (!state) {
+			if (right) {
+				GetComponentsInParent<AudioSource> () [1].Stop ();
+				GetComponentsInParent<AudioSource> () [0].Play ();
+			}
+			opening = true;
+			closing = false;
+			state = true;
+		} 
+	}
+
+	public void callClose(){
+		if (state){
+			if (right) {
+				GetComponentsInParent<AudioSource> () [0].Stop ();
+				GetComponentsInParent<AudioSource> () [1].Play ();
+			}
+			opening = false;
+			closing = true;
+			state = false;
+		}
+	}
+
 }
