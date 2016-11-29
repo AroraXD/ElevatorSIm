@@ -16,13 +16,14 @@ public class ElevatorControl : MonoBehaviour {
 	}
 
 	void FixedUpdate(){
-		Debug.Log (doors.GetComponentInChildren<DoorControl> ().getState ());
+		//Debug.Log (doors.GetComponentInChildren<DoorControl> ().getState ());
 		if (doors.GetComponentInChildren<DoorControl> ().getState () && !state) {
 			GetComponent<AudioSource>().Play();
+			GetComponentInChildren<LightController> ().setStop(false);
 			state = true;
-		}
-		if (!doors.GetComponentInChildren<DoorControl> ().getState () && state) {
+		} else if (!doors.GetComponentInChildren<DoorControl> ().getState () && state) {
 			GetComponent<AudioSource>().Stop();
+			GetComponentInChildren<LightController> ().setStop(true);
 			state = false;
 		}
 	}
