@@ -5,6 +5,7 @@ public class ElevatorControl : MonoBehaviour {
 
 	protected bool state = false;
 	public GameObject doors;
+	public GameObject particles;
 	private DoorControl doorControl;
 	private AudioSource audioSource;
 	private LightController lightController;
@@ -22,22 +23,26 @@ public class ElevatorControl : MonoBehaviour {
 
 	void FixedUpdate(){
 		//Debug.Log (doors.GetComponentInChildren<DoorControl> ().getState ());
-		if (doorControl.getState () && !state) {
+		if (doorControl.getState ()) {
 			audioSource.Play();
 			lightController.setStop(false);
 			state = true;
-		} else if (!doorControl.getState () && state) {
+		} else if (!doorControl.getState ()) {
 			audioSource.Stop();
 			lightController.setStop(true);
 			state = false;
 		}
-		/*if (doors.GetComponentInChildren<DoorControl> ().getState () && Input.GetKeyDown (KeyCode.Return)){
-			doors.GetComponentsInChildren<DoorControl> ()[0].callOpen();
-			doors.GetComponentsInChildren<DoorControl> ()[1].callOpen();
-		} else if(!doors.GetComponentInChildren<DoorControl> ().getState () && Input.GetKeyDown (KeyCode.Return)){
-			doors.GetComponentsInChildren<DoorControl> ()[0].callClose();
-			doors.GetComponentsInChildren<DoorControl> ()[1].callClose();
-		}*/
+	}
+
+
+	public void toggleParticles(){
+		foreach (var particle in particles.GetComponentsInChildren<ParticleSystem>()) {
+			if (particle.isStopped || particle.isPaused) {
+				particle.Play ();
+			} else {
+				particle.Stop ();
+			}
+		}
 	}
 
 	public void callDoor(){

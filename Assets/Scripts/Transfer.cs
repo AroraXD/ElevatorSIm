@@ -43,9 +43,11 @@ public class Transfer : MonoBehaviour {
 	protected void checkTime(){
 		if (worldTimer >= 94&& !complete[7]) {
 			Ele2Control.callDoor ();
+			Ele2Control.toggleParticles ();
 			complete [7] = true;
 		} else if (worldTimer >= 74 && !complete[6]) {
 			Ele2Control.callDoor ();
+			Ele2Control.toggleParticles ();
 			complete [6] = true;
 		} else if (worldTimer >= 64 && !complete[5]) {
 			stage++;
@@ -53,9 +55,11 @@ public class Transfer : MonoBehaviour {
 			complete [5] = true;
 		} else if (worldTimer >= 58 && !complete[4]) {
 			Ele1Control.callDoor ();
+			Ele1Control.toggleParticles ();
 			complete [4] = true;
 		} else if (worldTimer >= 42 && !complete[3]) {
 			Ele1Control.callDoor ();
+			Ele1Control.toggleParticles ();
 			complete [3] = true;
 		} else if (worldTimer >= 35 && !complete[2]) {
 			stage++;
@@ -63,11 +67,12 @@ public class Transfer : MonoBehaviour {
 			complete [2] = true;
 			flashTimer = Random.Range (5,20);
 		} else if (worldTimer >= 28 && !complete[1]) {
-			complete [1] = true;
 			Ele0Control.callDoor ();
+			Ele0Control.toggleParticles ();
 			complete [1] = true;
 		} else if (worldTimer >= 10 && !complete[0]) {
 			Ele0Control.callDoor ();
+			Ele0Control.toggleParticles ();
 			complete [0] = true;
 		}
 	}
