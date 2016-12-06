@@ -57,7 +57,7 @@ public class Transfer : MonoBehaviour {
 		} else if (worldTimer >= 42 && !complete[3]) {
 			Ele1Control.callDoor ();
 			complete [3] = true;
-		} else if (worldTimer >= 1 && !complete[2]) {
+		} else if (worldTimer >= 35 && !complete[2]) {
 			stage++;
 			changing = true;
 			complete [2] = true;
