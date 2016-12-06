@@ -3,9 +3,10 @@ using System.Collections;
 
 public class ElevatorControl : MonoBehaviour {
 
-	protected bool state = false;
+	public bool state = false;
 	public GameObject doors;
 	public GameObject particles;
+	public bool isMoving = false;
 	private DoorControl doorControl;
 	private AudioSource audioSource;
 	private LightController lightController;
@@ -15,22 +16,19 @@ public class ElevatorControl : MonoBehaviour {
 		audioSource = GetComponent<AudioSource> ();
 		lightController = GetComponentInChildren<LightController> ();
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
 
 	void FixedUpdate(){
-		//Debug.Log (doors.GetComponentInChildren<DoorControl> ().getState ());
-		if (doorControl.getState ()) {
-			audioSource.Play();
-			lightController.setStop(false);
-			state = true;
-		} else if (!doorControl.getState ()) {
-			audioSource.Stop();
-			lightController.setStop(true);
-			state = false;
+		lightController.setStop(true);
+
+//		Debug.Log (doors.GetComponentInChildren<DoorControl> ().getState ());
+		if (isMoving) {
+			if (!audioSource.isPlaying) {
+				audioSource.Play ();
+			}
+		} else {
+			if (audioSource.isPlaying) {
+				audioSource.Stop ();
+			}
 		}
 	}
 

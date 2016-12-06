@@ -49,50 +49,66 @@ public class Transfer : MonoBehaviour {
 	protected void checkTime(){
 		if (worldTimer >= 290 && !complete[9]){
             Ele3Control.callDoor();
+			Ele3Control.isMoving = false;
             complete[9] = true;
         } else if (worldTimer >= 260 && !complete[8]) {
             stage++;
             changing = true;
             complete[8] = true;
+			Ele3Control.isMoving = true;
         } else if (worldTimer >= 250 && !complete[7]) {
 			Ele2Control.callDoor ();
 			Ele2Control.toggleParticles ();
+			Ele2Control.state = false;
+
 			complete [7] = true;
 		} else if (worldTimer >= 180 && !complete[6]) {
 			Ele2Control.callDoor ();
 			Ele2Control.toggleParticles ();
+			Ele2Control.state = true;
+			Ele2Control.isMoving = false;
+
 			complete [6] = true;
 		} else if (worldTimer >= 170 && !complete[5]) {
 			stage++;
 			changing = true;
 			complete [5] = true;
+			Ele2Control.state = true;
 		} else if (worldTimer >= 160 && !complete[4]) {
+			Ele1Control.isMoving = false;
 			Ele1Control.callDoor ();
 			Ele1Control.toggleParticles ();
+
 			complete [4] = true;
 		} else if (worldTimer >= 100 && !complete[3]) {
 			Ele1Control.callDoor ();
 			Ele1Control.toggleParticles ();
+			Ele1Control.state = true;
+			Ele1Control.isMoving = false;
 			complete [3] = true;
 		} else if (worldTimer >= 90 && !complete[2]) {
 			stage++;
 			changing = true;
 			complete [2] = true;
 			flashTimer = Random.Range (5,20);
+			Ele1Control.isMoving = true;
 		} else if (worldTimer >= 70 && !complete[1]) {
 			complete [1] = true;
 			Ele0Control.callDoor ();
+			Ele0Control.state = false;
 			Ele0Control.toggleParticles ();
 			complete [1] = true;
 		} else if (worldTimer >= 10 && !complete[0]) {
 			Ele0Control.callDoor ();
+			Ele0Control.state = true;
 			Ele0Control.toggleParticles ();
 			complete [0] = true;
+			Ele0Control.isMoving = false;
+
 		}	
 	}
 
 	protected void movePlayer(){
-		Debug.Log (changeStage);
 		if (changing) {
 			if (changeStage == 0 || changeStage == 2) {
 				lightTimer++;
